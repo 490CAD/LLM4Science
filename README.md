@@ -17,30 +17,30 @@ Input File is like `id, prompt, A, B, C, D, E, answer` and submission file is li
 The repository's file structure is followed.
 
 ```
-___
+__________
 	|____backup
-				|____data
-				|____code
+		|____data
+		|____code
 	|____data
-				|____wiki
-				|____train.csv
-				|____eval.csv
-				|____train_context.csv
-				|____eval_context.csv
+		|____wiki
+		|____train.csv
+		|____eval.csv
+		|____train_context.csv
+		|____eval_context.csv
 	|____output
-				|____llama2-7b-max5gb
-				|____llama2-13b-max5gb
-				|____llama2-7b-lora-wiki
-				|____llama2-13b-lora-wiki
+		|____llama2-7b-max5gb
+		|____llama2-13b-max5gb
+		|____llama2-7b-lora-wiki
+		|____llama2-13b-lora-wiki
 	|____utils
-				|____shuffle_data.py
-				|____split_model.py
-				|____train_data_analyze.py
+		|____shuffle_data.py
+		|____split_model.py
+		|____train_data_analyze.py
 	|____scripts
-				|____test_causal.py
-				|____test_cls.py
-				|____train_cls.py
-				|____train_causal.py
+		|____test_causal.py
+		|____test_cls.py
+		|____train_cls.py
+		|____train_causal.py
 	|____add_wikipedia.py
 	|____test_final.py
 	|____train_causal_wiki.py
@@ -68,6 +68,12 @@ python test_final.py
 ## CITE
 
 - [Dataset notebook](https://www.kaggle.com/competitions/kaggle-llm-science-exam/discussion/436383)
+
+  [Infer notebook](https://www.kaggle.com/code/zzy990106/llama-7b-infer)
+
+  [Model choose notebook](https://www.kaggle.com/code/radek1/best-open-source-llm-starter-pack)
+
+  [Add wikipedia notebook](https://www.kaggle.com/code/jjinho/open-book-llm-science-exam)
 
 - [LLM checkpoint 13b](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b)
 
