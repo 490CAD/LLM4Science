@@ -2,6 +2,13 @@
 
 Welcome to the "LLM4Science" repository! This is a simple large language model for science exam, and it is mainly used for kaggle competition, and here is the [link](https://www.kaggle.com/competitions/kaggle-llm-science-exam/). Below is the more introduction.
 
+## Main Method
+
+We had won the Sliver medal of the contest, and finally reached Top 3% on the leardborad.
+
+Our main method is using wiki pedia as the openbook, using the cleaned wiki knowdledge and using three our trained deberta model, finally using feature combining method.
+
+
 ## Background
 
 Inspired by the [OpenBookQA dataset](https://allenai.org/data/open-book-qa), this competition challenges participants to answer difficult science-based questions *written by a Large Language Model*.
@@ -17,12 +24,16 @@ Input File is like `id, prompt, A, B, C, D, E, answer` and submission file is li
 The repository's file structure is followed.
 
 ```
-__________
+_________
 	|____backup
 		|____data
 		|____code
 	|____data
+		|____270K_PKL
+		|____270K-Wikipedia-STEM-articles
 		|____wiki
+		|____all_12_context.csv
+		|____test_fixed.csv
 		|____train.csv
 		|____eval.csv
 		|____train_context.csv
@@ -32,18 +43,36 @@ __________
 		|____llama2-13b-max5gb
 		|____llama2-7b-lora-wiki
 		|____llama2-13b-lora-wiki
+		|____deberta
+			|____model_0914
+			|____model_0920
+			|____model_1002
+			|____checkpoints_100
+			|____checkpoints_103
+			|____checkpoints_104
 	|____utils
+		|____cal_three_input.py
+		|____cal_three_model.py
 		|____shuffle_data.py
 		|____split_model.py
 		|____train_data_analyze.py
+		|____add_E.py
+		|____add_id.py
+		|____extract_raw.py
+		|____test_tokenizer.py
 	|____scripts
 		|____test_causal.py
 		|____test_cls.py
 		|____train_cls.py
 		|____train_causal.py
+		|____test_final.py
+		|____train_causal_wiki.py
 	|____add_wikipedia.py
-	|____test_final.py
-	|____train_causal_wiki.py
+	|____train_deberta.py
+	|____test_deberta.py
+	|____train_deberta_distillation.py
+	|____train_deberta_270kcontext1.py
+	|____train_deberta_270kcontext2.py
 	|____requirements.txt
 ```
 
@@ -61,9 +90,6 @@ python test_final.py
 
 ## TODO
 
-- Release the checkpoints
-- Release the upload notebook
-- Improve the LB score
 
 ## CITE
 
@@ -75,9 +101,14 @@ python test_final.py
 
   [Add wikipedia notebook](https://www.kaggle.com/code/jjinho/open-book-llm-science-exam)
 
+  [270k cleaned wikipedia dataset](https://www.kaggle.com/datasets/mbanaei/all-paraphs-parsed-expanded)
+
+
 - [LLM checkpoint 13b](https://huggingface.co/NousResearch/Nous-Hermes-Llama2-13b)
 
   [LLM checkpoint 7b](https://huggingface.co/NousResearch/Nous-Hermes-llama-2-7b)
+
+  [deberta]()
 
 - kaggle competition
 
