@@ -27,10 +27,10 @@ logging.basicConfig(filename='log.txt',
                      level=logging.DEBUG)
 
 BASEDATA_PATH = "/home/kaggleLLAM/data/"
-MODEL_PATH = "/home/kaggleLLAM/model/llama2-7b/"
-ADAPATER_PATH = "/home/kaggleLLAM/output/checkpoint-15040/"
+MODEL_PATH = "/home/kaggleLLAM/model/checkpoint-8332/"
+# ADAPATER_PATH = "/home/kaggleLLAM/output/checkpoint-7520/"
 MAX_SEQ_LEN = 10000000000
-MAX_CON_LEN = 2000
+MAX_CON_LEN = 2500
 res_list = []
 
 tokenizer = AutoTokenizer.from_pretrained(
@@ -179,7 +179,8 @@ def cal_score(mode, test_csv, output_csv):
     console_output("CV Score", sum / cnt)
 
 if __name__ == "__main__":
-    cal_score(0, pd.read_csv(BASEDATA_PATH + '/eval_66855.csv'), pd.read_csv(BASEDATA_PATH + '/submission.csv'))
+    # cal_score(0, pd.read_csv(BASEDATA_PATH + '/n_eval.csv'), pd.read_csv( '/home/kaggleLLAM/data/submission2.csv'))
+    # exit()
     # print(tokenizer.encode('A'), tokenizer.encode('B'), tokenizer.encode('C'), tokenizer.encode('D'), tokenizer.encode('E'))
     training_args = TrainingArguments(
         output_dir='/home/kaggleLLAM/output',
@@ -193,7 +194,7 @@ if __name__ == "__main__":
         trust_remote_code=True,
 )
     
-    model_test = peft_model.PeftModelForCausalLM.from_pretrained(model_test, ADAPATER_PATH, adapter_name="SciQA_lora")
+    # model_test = peft_model.PeftModelForCausalLM.from_pretrained(model_test, ADAPATER_PATH, adapter_name="SciQA_lora")
     
     trainer_test = CustomTrainer(
         model=model_test,
@@ -203,7 +204,7 @@ if __name__ == "__main__":
     )
     
 #     # test
-    test_data = pd.read_csv(BASEDATA_PATH + '/eval_context_66855.csv')
+    test_data = pd.read_csv(BASEDATA_PATH + '/eval_wiki.csv')
     test_data['answer'] = 'A' # dummy answer that allows us to preprocess the test dataset just like we preprocessed the train dataset
     tokenized_test_dataset = Dataset.from_pandas(test_data).map(preprocess, remove_columns=['prompt', 'context', 'A', 'B', 'C', 'D', 'E', 'answer'])
     sub = pd.DataFrame()
@@ -237,7 +238,7 @@ if __name__ == "__main__":
         pbar.update(1)
     pbar.close()
     sub['prediction'] = res_list
-    sub.to_csv(BASEDATA_PATH+'submission.csv', index=False)
+    sub.to_csv(BASEDATA_PATH+'submission2.csv', index=False)
     
     
     # cal_score(1, BASEDATA_PATH + '/new_eval.csv', sub)

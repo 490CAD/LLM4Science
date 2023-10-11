@@ -11,7 +11,7 @@ from datasets import Dataset, load_metric
 from dataclasses import dataclass
 from transformers import AutoTokenizer
 from transformers.tokenization_utils_base import PreTrainedTokenizerBase, PaddingStrategy
-from transformers import TrainingArguments, Trainer, AutoModelForCausalLM, top_k_top_p_filtering
+from transformers import TrainingArguments, Trainer, AutoModelForCausalLM, top_k_top_p_filtering, AutoModelForMultipleChoice
 
 Super_Prompt = "Using background knowledge as a reference, choose one option as an answer from a multiple-choice question. The answer must begin with A or B or C or D or E.\nBackground knowledge is:BACK_KNOW\nThe question is:QUERY\nThe answer is:"
 
@@ -101,13 +101,13 @@ class CustomTrainer(Trainer):
 if __name__  == "__main__":
     
     #wandb_init
-    wandb.init(project='kaggleLLAM', name='llama2-7b_cau_bs1_lr5e-5_warm0.2_lora_r16_2epo_wiki66855')
+    wandb.init(project='kaggleLLAM', name='llama2-7b_cau_bs1_lr5e-5_warm0.2_2epo_wiki66855')
     
     # prepare the dataset
-    train_data = pd.read_csv(BASEDATA_PATH + '/train_context_66855.csv')
+    train_data = pd.read_csv(BASEDATA_PATH + '/train_context_66855.csv')[:100]
     # train_data = train_data.drop(columns="id")
     console_output("train_data_shape", train_data.shape)
-    eval_data = pd.read_csv(BASEDATA_PATH + '/eval_context_66855.csv')
+    eval_data = pd.read_csv(BASEDATA_PATH + '/eval_context_66855.csv')[:10]
     # eval_data = eval_data.drop(columns="id")
     console_output("eval_data_shape", eval_data.shape)
     
@@ -125,7 +125,7 @@ if __name__  == "__main__":
     # train
     training_args = TrainingArguments(
         warmup_ratio=0.2,
-        learning_rate=5e-6,
+        learning_rate=5e-5,
         per_device_train_batch_size=1,
         gradient_accumulation_steps=8,
         per_device_eval_batch_size=1,
@@ -141,16 +141,16 @@ if __name__  == "__main__":
         # deepspeed="/home/kaggleLLAM/utils/stage2.json"
     )
 
-    model = AutoModelForCausalLM.from_pretrained(
-        MODEL_PATH,
+    model = AutoModelForMultipleChoice.from_pretrained(
+        "baichuan-inc/Baichuan2-7B",
         torch_dtype=torch.bfloat16,
         device_map="auto",
         trust_remote_code=True,
 )
     
-    peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=16, lora_alpha=32, lora_dropout=0.1)
-    model = get_peft_model(model, peft_config)
-    model.print_trainable_parameters()
+    # peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=16, lora_alpha=32, lora_dropout=0.1)
+    # model = get_peft_model(model, peft_config)
+    # model.print_trainable_parameters()
     
     trainer = CustomTrainer(
         model=model,
@@ -160,4 +160,5 @@ if __name__  == "__main__":
         train_dataset=tokenized_train_dataset,
         eval_dataset=tokenized_eval_dataset,
     )
+    exit()
     trainer.train()
