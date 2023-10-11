@@ -15,7 +15,7 @@ Inspired by the [OpenBookQA dataset](https://allenai.org/data/open-book-qa), thi
 
 Your work will help researchers better understand the ability of LLMs to test themselves, and the potential of LLMs that can be run in resource-constrained environments.
 
-The final score is based on the formula $$MAP@3=\frac1U\sum_{u=1}^U\sum_{k=1}^{min(n,3)}P(k)\times rel(k)$$, where $U$ is the number of questions in the test set, $P(k)$ is the precision at cutoff $k$, $n$ is the number predictions per question, and $rel(k)$ is an indicator function equaling 1 if the item at rank $k$ is a relevant (correct) label, zero otherwise.
+The final score is based on the formula $$MAP@3=\frac1U\sum_{u=1}^U\sum_{k=1}^{min(n,3)}P(k)\times rel(k)$$ where $U$ is the number of questions in the test set, $P(k)$ is the precision at cutoff $k$, $n$ is the number predictions per question, and $rel(k)$ is an indicator function equaling 1 if the item at rank $k$ is a relevant (correct) label, zero otherwise.
 
 Input File is like `id, prompt, A, B, C, D, E, answer` and submission file is like `id, prediction`. You may predict up to 3 labels for your `prediction`.
 
