@@ -1,6 +1,8 @@
 # LLM4Science
 
-Welcome to the "LLM4Science" repository! This is a simple large language model for science exam, and it is mainly used for kaggle competition, and here is the [link](https://www.kaggle.com/competitions/kaggle-llm-science-exam/). Below is the more introduction.
+Welcome to the "LLM4Science" 🥈silver medal (91/2665, 4%) solution's repo.
+
+This is a simple large language model for science exam, and it is mainly used for kaggle competition, and here is the [link](https://www.kaggle.com/competitions/kaggle-llm-science-exam/). Below is the more introduction.
 
 ## Main Method
 
